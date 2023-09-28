@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+  labels:
+    app: my-app
+    env: prod
+spec:
+  # modify replicas according to your case
+  replicas: 6
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: my-app
+      env: prod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: my-app
+        env: prod
+    spec:
+      containers:
+      - name: n-app
+        image: jilu407/class-930:1
+        ports:
+        - containerPort: 80
